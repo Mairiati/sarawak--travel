@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarawak Travel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        .header-bar {
+            background-color: #e8e8e8;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            position: relative;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #888;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            background-color: #555;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        .hero h1 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: #222;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-dark {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .btn-dark:hover {
+            background-color: #555555;
+        }
+
+        .btn-light {
+            background-color: #f0f0f0;
+            color: #222222;
+            border: 1px solid #dcdcdc;
+        }
+
+        .btn-light:hover {
+            background-color: #e2e2e2;
+        }
+
+        .panel {
+            background-color: #ffffff;
+            padding: 24px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel h2 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: #222;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .btn-send {
+            max-width: 250px;
+            margin-top: 10px;
+        }
+
+        .package-item {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background: #fafafa;
+        }
+
+        .package-item h3 {
+            font-size: 1.1rem;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .package-item p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .package-item .price {
+            font-weight: bold;
+            color: #2c7a7b;
+        }
+
+        .alert-success {
+            padding: 12px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar" id="headerBar">
+        Sarawak Travel
+        <button class="close-btn" onclick="toggleHeader()" title="Close Header">&#10005;</button>
+    </div>
+
+    <section class="hero">
+        <h1>Welcome to Sarawak Tour Booking</h1>
+        <p>Explore the stunning rainforests and culture of Sarawak with us!</p>
+    </section>
+
+    <main class="container">
+        <button class="btn btn-dark" onclick="showSection('packagesPanel')">View Tour Packages</button>
+        <button class="btn btn-light" onclick="showSection('bookingPanel')">Book Now</button>
+        <button class="btn btn-light" onclick="showSection('contactPanel')">Contact Us</button>
+
+        <div id="packagesPanel" class="panel">
+            <h2>Available Tour Packages</h2>
+            <div class="package-item">
+                <h3>Bako National Park Day Tour</h3>
+                <p>Trek through lush rainforests and catch a glimpse of the famous Proboscis Monkeys.</p>
+                <span class="price">RM 250 / person</span>
+            </div>
+            <div class="package-item">
+                <h3>Sarawak Cultural Village Experience</h3>
+                <p>Discover the rich heritage and traditional houses of 7 local ethnic tribes.</p>
+                <span class="price">RM 180 / person</span>
+            </div>
+            <div class="package-item">
+                <h3>Mulu Caves Exploration (3D2N)</h3>
+                <p>Witness millions of bats leaving Deer Cave and explore world-renowned limestone caves.</p>
+                <span class="price">RM 650 / person</span>
+            </div>
+            <div class="package-item">
+                <h3>Semenggoh Wildlife Centre Tour</h3>
+                <p>Observe semi-wild orangutans feeding in their natural rainforest habitat.</p>
+                <span class="price">RM 120 / person</span>
+            </div>
+            <div class="package-item">
+                <h3>Damai Beach Relaxation Trip</h3>
+                <p>Unwind at the scenic coastal resort area nestled against Mount Santubong.</p>
+                <span class="price">RM 200 / person</span>
+            </div>
+            <div class="package-item">
+                <h3>Niah National Park Historical Tour</h3>
+                <p>Explore ancient human burial sites and massive limestone caves with deep historical value.</p>
+                <span class="price">RM 280 / person</span>
+            </div>
+        </div>
+
+        <div id="bookingPanel" class="panel">
+            <h2>Book Your Tour</h2>
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                <div class="form-group">
+                    <label for="bookName">Full Name:</label>
+                    <input type="text" id="bookName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="selectPackage">Choose Package:</label>
+                    <select id="selectPackage" required>
+                        <option value="">-- Select a Tour --</option>
+                        <option value="Bako National Park">Bako National Park Day Tour</option>
+                        <option value="Sarawak Cultural Village">Sarawak Cultural Village Experience</option>
+                        <option value="Mulu Caves">Mulu Caves Exploration</option>
+                        <option value="Semenggoh Wildlife Centre">Semenggoh Wildlife Centre Tour</option>
+                        <option value="Damai Beach">Damai Beach Relaxation Trip</option>
+                        <option value="Niah National Park">Niah National Park Historical Tour</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookDate">Date of Travel:</label>
+                    <input type="date" id="bookDate" required>
+                </div>
+                <button type="submit" class="btn btn-dark">Confirm Booking</button>
+            </form>
+            <div id="bookingSuccess" class="alert-success"></div>
+        </div>
+
+        <div id="contactPanel" class="panel active">
+            <h2>Send Us a Message</h2>
+            <form id="messageForm" onsubmit="handleMessageSubmit(event)">
+                <div class="form-group">
+                    <label for="msgName">Name:</label>
+                    <input type="text" id="msgName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="msgEmail">Email:</label>
+                    <input type="email" id="msgEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="msgContent">Message:</label>
+                    <textarea id="msgContent" required placeholder="Write your message here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark btn-send">Send Message</button>
+            </form>
+            <div id="messageSuccess" class="alert-success"></div>
+        </div>
+    </main>
+
+    <script>
+        function showSection(panelId) {
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            const selectedPanel = document.getElementById(panelId);
+            if (selectedPanel) {
+                selectedPanel.classList.add('active');
+                selectedPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function handleMessageSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('msgName').value;
+            const successBox = document.getElementById('messageSuccess');
+            
+            successBox.innerHTML = 'Thank you, <strong>' + name + '</strong>! Your message has been sent successfully.';
+            successBox.style.display = 'block';
+
+            document.getElementById('messageForm').reset();
+
+            setTimeout(() => {
+                successBox.style.display = 'none';
+            }, 5000);
+        }
+
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('bookName').value;
+            const pkg = document.getElementById('selectPackage').value;
+            const date = document.getElementById('bookDate').value;
+            const successBox = document.getElementById('bookingSuccess');
+
+            successBox.innerHTML = 'Booking Confirmed! Thank you, <strong>' + name + '</strong>. We have booked the <em>' + pkg + '</em> for ' + date + '.';
+            successBox.style.display = 'block';
+
+            document.getElementById('bookingForm').reset();
+
+            setTimeout(() => {
+                successBox.style.display = 'none';
+            }, 6000);
+        }
+
+        function toggleHeader() {
+            const header = document.getElementById('headerBar');
+            header.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
